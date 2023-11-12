@@ -6,20 +6,23 @@ import (
 	"gorm.io/gorm"
 )
 
-type Farm struct {
+type Pond struct {
 	gorm.Model
 	ID        uint           `gorm:"primaryKey" json:"ID"`
 	Name      string         `gorm:"unique" json:"Name"`
 	CreatedAt time.Time      `json:"CreatedAt"`
 	UpdatedAt time.Time      `json:"UpdatedAt"`
 	DeletedAt gorm.DeletedAt `json:"DeletedAt"`
-	Pond      []Pond
+	FarmID    int
+	Farm      Farm
 }
 
-type CreateFarmInput struct {
-	Name string `json:"Name" binding:"required"`
+type CreatePond struct {
+	FarmID int    `json:"FarmID" binding:"required"`
+	Name   string `json:"Name" binding:"required"`
 }
 
-type UpdateFarmInput struct {
-	Name string `json:"Name" binding:"required"`
+type UpdatePond struct {
+	FarmID int    `json:"FarmID"`
+	Name   string `json:"Name" binding:"required"`
 }
