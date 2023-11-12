@@ -2,6 +2,7 @@ package main
 
 import (
 	"delos-test/controllers/farmcontroller"
+	"delos-test/controllers/logcontroller"
 	"delos-test/controllers/pondcontroller"
 	"delos-test/models"
 
@@ -23,6 +24,8 @@ func main() {
 	r.POST("/api/ponds", pondcontroller.Create)
 	r.PUT("/api/ponds/:id", pondcontroller.Update)
 	r.DELETE("/api/ponds/:id", pondcontroller.Delete)
+	// Call Log
+	r.GET("/api/logs", logcontroller.Index)
 
 	r.Run()
 }

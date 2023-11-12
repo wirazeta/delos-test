@@ -12,7 +12,7 @@ func ConnectDatabase() {
 	if err != nil {
 		panic(err)
 	}
-	database.AutoMigrate(&Farm{}, &Pond{}, &Log{})
+	database.AutoMigrate(&Farm{}, &Pond{}, &Log{}, &UserAgent{})
 
 	DB = database
 }

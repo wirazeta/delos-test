@@ -13,16 +13,32 @@ import (
 func Index(c *gin.Context) {
 	var ponds []models.Pond
 	var log models.Log
+	var userAgent models.UserAgent
 
 	if err := models.DB.Where("name = ?", "GET /api/ponds").First(&log).Error; err != nil {
-		log := models.Log{Name: "GET /api/ponds", Count: 1, UserAgent: c.Request.UserAgent()}
+		log := models.Log{Name: "GET /api/ponds", Count: 1, UserAgent: 1}
 		if err := models.DB.Create(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+		}
 		fmt.Print(gin.H{"result": &log})
 	} else {
 		log.Count++
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+			log.UserAgent++
+		}
 		fmt.Print(models.DB.Where("name = ?", "GET /api/ponds").First(&log))
 		if err := models.DB.Save(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -42,16 +58,32 @@ func Index(c *gin.Context) {
 func GetById(c *gin.Context) {
 	var pond models.Pond
 	var log models.Log
+	var userAgent models.UserAgent
 
 	if err := models.DB.Where("name = ?", "GET /api/ponds/:id").First(&log).Error; err != nil {
-		log := models.Log{Name: "GET /api/ponds/:id", Count: 1, UserAgent: c.Request.UserAgent()}
+		log := models.Log{Name: "GET /api/ponds/:id", Count: 1, UserAgent: 1}
 		if err := models.DB.Create(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+		}
 		fmt.Print(gin.H{"result": &log})
 	} else {
 		log.Count++
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+			log.UserAgent++
+		}
 		if err := models.DB.Save(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -71,16 +103,32 @@ func GetById(c *gin.Context) {
 func Create(c *gin.Context) {
 	var input models.CreatePond
 	var log models.Log
+	var userAgent models.UserAgent
 
 	if err := models.DB.Where("name = ?", "POST /api/ponds").First(&log).Error; err != nil {
-		log := models.Log{Name: "POST /api/ponds", Count: 1, UserAgent: c.Request.UserAgent()}
+		log := models.Log{Name: "POST /api/ponds", Count: 1, UserAgent: 1}
 		if err := models.DB.Create(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+		}
 		fmt.Print(gin.H{"result": &log})
 	} else {
 		log.Count++
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+			log.UserAgent++
+		}
 		if err := models.DB.Save(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -103,16 +151,32 @@ func Create(c *gin.Context) {
 func Update(c *gin.Context) {
 	var pond models.Pond
 	var log models.Log
+	var userAgent models.UserAgent
 
 	if err := models.DB.Where("name = ?", "PUT /api/ponds/:id").First(&log).Error; err != nil {
-		log := models.Log{Name: "PUT /api/ponds/:id", Count: 1, UserAgent: c.Request.UserAgent()}
+		log := models.Log{Name: "PUT /api/ponds/:id", Count: 1, UserAgent: 1}
 		if err := models.DB.Create(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+		}
 		fmt.Print(gin.H{"result": &log})
 	} else {
 		log.Count++
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+			log.UserAgent++
+		}
 		if err := models.DB.Save(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -155,16 +219,32 @@ func Update(c *gin.Context) {
 func Delete(c *gin.Context) {
 	var pond models.Pond
 	var log models.Log
+	var userAgent models.UserAgent
 
 	if err := models.DB.Where("name = ?", "DELETE /api/ponds/:id").First(&log).Error; err != nil {
-		log := models.Log{Name: "DELETE /api/ponds/:id", Count: 1, UserAgent: c.Request.UserAgent()}
+		log := models.Log{Name: "DELETE /api/ponds/:id", Count: 1, UserAgent: 1}
 		if err := models.DB.Create(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+		}
 		fmt.Print(gin.H{"result": &log})
 	} else {
 		log.Count++
+		if err := models.DB.Where("name = ?", c.Request.UserAgent()).Where("log_id = ?", log.ID).First(&userAgent).Error; err != nil {
+			userAgent := models.UserAgent{Name: c.Request.UserAgent(), LogID: log.ID}
+			if err := models.DB.Create(&userAgent).Error; err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
+			}
+			log.UserAgent++
+		}
 		if err := models.DB.Save(&log).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
